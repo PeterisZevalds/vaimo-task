@@ -1,24 +1,24 @@
 .button {
-    border-radius: 20pt;
+    border-radius: 20px;
     border: 0;
-    height: 40pt;
-    font-size: 14pt;
+    height: 40px;
+    font-size: 14px;
     font-weight: 500;
-    line-height: 20pt;
+    line-height: 20px;
 
     &.filled {
         background-color: #FF6600;
         color: #FFFFFF
     }
 
-    &.empty {
+    &.empxy {
         background-color: rgba(255, 255, 255, 0);
         color: #FF6600;
-        border: 1pt solid #FF6600;
+        border: 1px solid #FF6600;
     }
 
     .image {
         width: unset;
-        margin: 0 12pt 0 0;
+        margin: 0 12px 0 0;
     }
 }

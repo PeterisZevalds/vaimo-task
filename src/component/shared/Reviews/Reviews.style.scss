@@ -1,3 +1,42 @@
+
+#root {
+    $rating: 0;
+  }
+
 .product-rating {
-    padding: 12pt 0;
+    padding: 12px 0;
+    font-size: 12px;
+
+    .Stars {
+        --star-size: 18px;
+        --star-color: #E6E7EB;
+        --star-background: #FF6600;
+        --percent: calc(var(--rating) / 5 * 100%);
+
+        display: inline-block;
+        font-size: var(--star-size);
+        font-family: Times; // make sure ★ appears correctly
+        line-height: 1;
+
+        &::before {
+          content: '★★★★★';
+          letter-spacing: 3px;
+          background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+    }
+
+    .rating {
+      color: #FF6600;
+      margin: 0 4px 0 0;
+    }
+
+    .review-count {
+      margin: 0 24px 0 0;
+    }
+
+    .total-buyers {
+      color: #333333;
+    }
 }

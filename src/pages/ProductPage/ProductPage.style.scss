@@ -1,15 +1,76 @@
 .product-detail-page {
-    margin: 4pt;
+    margin: 12px;
+
+    &.desktop {
+        display: flex;
+        padding: 48px 72px 0 72px;
+        margin: 0;
+
+        .product-image {
+            max-width: unset;
+        }
+
+        .product-detail {
+            display: flex;
+        }
+
+        .product-details {
+            margin: 0 24px;
+            max-width: 526px;
+        }
+
+        .shipping-information {
+            max-width: 132px;
+        }
+
+        .product-price {
+            white-space: nowrap;
+        }
+
+        .qty-rocker-title {
+            margin: 24px 0 0;
+            line-height: 40px;
+            width: 112px;
+            color: #999999;
+        }
+
+        .option-price {
+            margin: 0 24px 0 0;
+        }
+
+        .product-order-block {
+            height: fit-content;
+        }
+    }
+
+    &.tablet {
+        .product-details {
+            margin: 0 24px 0 0;
+        }
+
+        .product-order-block {
+            height: fit-content;
+        }
+
+        .product-price {
+            white-space: nowrap;
+        }
+
+        .product-detail {
+            display: flex;
+        }
+    }
+
 
     .product-details {
-        margin: 12pt 0 0;
+        margin: 12px 0 0;
     }
 
     .product-name-wrapper {
-        margin: 8pt 0 0;
-        font-size: 16pt;
+        margin: 8px 0 0;
+        font-size: 16px;
         text-align: left;
-        line-height: 24pt;
+        line-height: 24px;
 
         .product-name {
             display: inline;
@@ -18,7 +79,7 @@
 
         .tag {
             float: right;
-            padding: 0 8pt;
+            padding: 0 8px;
             background-color: #EDF0F3;
             color: #999999;
         }
@@ -26,19 +87,19 @@
 
     .product-banner {
         display: flex;
-        height: 20pt;
-        line-height: 20pt;
-        font-size: 12pt;
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
 
         .tag {
-            padding: 0 8pt;
+            padding: 0 8px;
 
             &:first-child {
-                border-radius: 2pt 0 0 2pt;
+                border-radius: 2px 0 0 2px;
             }
 
             &:last-child {
-                border-radius: 0 2pt 2pt 0;
+                border-radius: 0 2px 2px 0;
             }
         }
 
@@ -55,94 +116,124 @@
         .checkmark {
             &::before {
                 content: url('../../assets/icon-checkmark.png');
-                margin: 0 4pt 0 0;
+                margin: 0 4px 0 0;
+                position: relative;
+                top: 2px;
             }
         }
     }
 
     .store-banner {
         background-color: #FFF0E6;
-        height: 40pt;
+        height: 40px;
         display: flex;
         justify-content: space-between;
-        margin: 12pt 0 0;
+        margin: 12px 0 0;
 
         .expo-logo {
             .image{
                 height: 100%;
-                width: 76pt;
+                width: 76px;
             }
         }
 
         .free-shipping {
-            line-height: 40pt;
+            line-height: 40px;
             display: list-item;
             color: #FF6600;
         }
 
         .chevron-right {
-            line-height: 40pt;
-            margin: 0 16pt 0 0;
+            line-height: 40px;
+            margin: 0 16px 0 0;
 
             .image {
                 position: relative;
-                margin-top: 14pt;
+                margin-top: 14px;
             }
         }
     }
 
     .options {
-        padding: 12pt 0;
-        border-top: 1pt solid #E6E7EB;
-        border-bottom: 1pt solid #E6E7EB;
+        padding: 12px 0;
+        border-top: 1px solid #E6E7EB;
+        border-bottom: 1px solid #E6E7EB;
     }
 
     .trade-assurance-wrapper {
-        margin: 8pt 0 12pt;
+        margin: 24px 0 12px;
         color: #999999;
-        font-size: 12pt;
+        font-size: 12px;
 
         .trade-assurance {
             .important {
-                font-size: 14pt;
-                margin: 0 0 0 5pt;
+                font-size: 14px;
+                margin: 0 0 0 5px;
                 font-weight: bold;
             }
         }
 
         .payments {
-            margin: 12pt 0;
+            margin: 12px 0;
 
             &> span {
-                margin: 0 4pt 0 0;
+                margin: 0 4px 0 0;
             }
         }
     }
 
     .discount-wrapper {
-        margin: 28pt 0 0;
-        font-size: 14pt;
+        margin: 28px 0 0;
+        font-size: 14px;
 
         .discount {
             color: #FF6600;
 
             &-ends {
-                margin: 0 24pt 0 0;
+                margin: 0 24px 0 0;
             }
 
             &-end-timer {
-                font-size: 16pt;
+                font-size: 16px;
             }
         }
 
         .icon {
-            margin: 0 12pt 0 0;
+            margin: 0 12px 0 0;
         }
     }
 
     .product-image {
         .image {
+            max-width: 400px;
             width: 100%;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+
+    .options {
+        font-size: 14px;
+
+        .current-prices {
+            .min-max-current {
+                color: #FF6600;
+                font-size: 16px;
+                font-weight: bold;
+                line-height: 24px;
+            }
+
+            .line {
+                color: #EDF0F3;
+            }
+
+            .min-options {
+                color: #333333;
+            }
+        }
+
+        .min-max-old-prices {
+            text-decoration: line-through;
         }
     }
 }

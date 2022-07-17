@@ -14,7 +14,20 @@ class OrderBlock extends Component {
         }
     }
 
-    renderShipTo(shippingMethod) {
+    calculateAddedOptionPrice(optionData) {
+        var optionTotalPrice = 0;
+
+        if (optionData) {
+            // eslint-disable-next-line array-callback-return
+            optionData.map(({optionPrice, count}) => {
+                optionTotalPrice += (optionPrice * count)
+            });
+        }
+
+        return optionTotalPrice;
+    }
+
+    renderShipTo(shippingMethod, addedOptions) {
         const { country,
                 title,
                 cost: {
@@ -22,6 +35,8 @@ class OrderBlock extends Component {
                     currency: {
                         symbol
         }}} = shippingMethod;
+
+        const totalPrice = value + this.calculateAddedOptionPrice(addedOptions);
 
         return (
             <div className='shipping-block'>
@@ -31,7 +46,7 @@ class OrderBlock extends Component {
                     <span className='shipping-method'>{' by ' + title}</span>
                 </div>
                 <div className='shipping-price'>
-                    <span className='product-price'>{ symbol + ' ' + value.toFixed(2) }</span>
+                    <span className='product-price'>{ symbol + ' ' + totalPrice.toFixed(2) }</span>
                 </div>
             </div>
         );
@@ -39,10 +54,13 @@ class OrderBlock extends Component {
 
     renderLeadTime(lead_time) {
         const { value, info } = lead_time;
+        const valueArr = value.split(' ');
 
         return (
             <div className='lead-time-block'>
-                <span>{'Lead Time ' + value}</span>
+                <span>{'Lead Time '}</span>
+                <span className='lead-number'>{ valueArr[0] + ' ' }</span>
+                <span>{ valueArr[1] }</span>
                 <span
                     className='icon'
                     onMouseEnter={() =>{this.setState({isShowLeadTimeInfo: true})}}
@@ -69,10 +87,13 @@ class OrderBlock extends Component {
 
     renderShippingTime(method) {
         const { shipping_time: { value, info }} = method;
+        const valueArr = value.split(' ');
 
         return (
             <div className='shipping-time-block'>
-                <span>{'Shipping Time ' + value}</span>
+                <span>{'Shipping Time '}</span>
+                <span className='shipping-time-number'>{ valueArr[0] + ' ' }</span>
+                <span>{ valueArr[1] }</span>
                 <span
                     className='icon'
                     onMouseEnter={() =>{this.setState({isShowShippingTimeInfo: true})}}
@@ -98,8 +119,10 @@ class OrderBlock extends Component {
     }
 
     render() {
-        const { shippingData, shippingData: {
-            method, lead_time
+        const { shippingData,
+                addedOptions,
+                shippingData: {
+                    method, lead_time
         }} = this.props;
 
         if (!shippingData) {
@@ -108,7 +131,7 @@ class OrderBlock extends Component {
 
         return (
             <div className='product-order-block'>
-                { this.renderShipTo(method) }
+                { this.renderShipTo(method, addedOptions) }
                 { this.renderLeadTime(lead_time) }
                 { this.renderShippingTime(method) }
                 <div className='button-wrapper'>

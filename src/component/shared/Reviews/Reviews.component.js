@@ -5,7 +5,7 @@ class Reviews extends Component {
 
     renderStarRating() {
         return (
-            <div>stars</div>
+            <div className='Stars' aria-label="Rating of this product is 2.3 out of 5."/>
         );
     }
 
@@ -29,7 +29,12 @@ class Reviews extends Component {
 
     render() {
         const { reviewData: { rating, count, total_buyers }} = this.props;
-        console.log('testprops', this.props);
+
+        const root = document.documentElement;
+        root?.style.setProperty(
+            "--rating", rating
+        );
+
         return (
             <div className='product-rating'>
                 { this.renderStarRating() }

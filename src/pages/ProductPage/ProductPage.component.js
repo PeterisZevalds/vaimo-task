@@ -10,17 +10,23 @@ import ApplePay from '../../assets/icon-apple-pay.svg';
 import ChevronRight from '../../assets/icon-chevron-right.png';
 import Reviews from '../../component/shared/Reviews/Reviews.component';
 import './ProductPage.style.scss';
+import QtyRockers from '../../component/shared/QtyRockers/QtyRockers.component';
 
 class ProductPageComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: {},
-            isLoading: true
+            isLoading: true,
+            isMobile: false,
+            isTablet: false,
+            addedOptions: []
         }
+
+        this.updateAddedOption = this.updateAddedOption.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         fetch('https://fe-assignment.vaimo.net/')
             .then((response) => response.json())
             .then((responseJson) => {
@@ -32,6 +38,53 @@ class ProductPageComponent extends Component {
             .catch((error) => {
               console.error(error);
             });
+
+        this.handleScreenResize();
+
+        window.addEventListener('resize', () => {
+            this.handleScreenResize();
+        }, false);
+    }
+
+    // Update state with added options and count from another component.
+    updateAddedOption(data) {
+        const { addedOptions } = this.state;
+
+        const i = addedOptions.findIndex(_data => _data.optionLabel === data.optionLabel);
+
+        if (i > -1) {
+            addedOptions[i] = data;
+            this.setState({
+                addedOptions: addedOptions,
+            })
+        } else {
+            addedOptions.push(data);
+            this.setState({
+                addedOptions: addedOptions,
+            })
+        }
+    }
+
+    handleScreenResize() {
+        if (window.innerWidth <= 768) {
+            this.setState({
+                isMobile: true
+            });
+        } else {
+            this.setState({
+                isMobile: false
+            });
+        }
+
+        if (window.innerWidth > 768 && window.innerWidth < 1320) {
+            this.setState({
+                isTablet: true
+            });
+        } else {
+            this.setState({
+                isTablet: false
+            });
+        }
     }
 
     renderTopBanner(props) {
@@ -73,10 +126,26 @@ class ProductPageComponent extends Component {
         );
     }
 
-    renderOption() {
+    renderOption(options, symbol) {
+        // Create array from options and get all lowest/highest values
+        const optionsArray = Object.values(options);
+        const lowestCurrentPrice = Math.min(...optionsArray.map(o => o.price.value));
+        const highestCurrentPrice = Math.max(...optionsArray.map(o => o.price.value));
+        const lowestOldPrice = Math.min(...optionsArray.map(o => o.old_price.value));
+        const highestOldPrice = Math.max(...optionsArray.map(o => o.old_price.value));
+
         return (
             <div className='options'>
-                weird block
+                <div className='current-prices'>
+                    <span className='min-max-current'>{symbol + ' ' + lowestCurrentPrice + ' - ' + symbol + ' ' + highestCurrentPrice}</span>
+                    <span className='option'>{' / Option'}</span>
+                    <span className='line'>{' | '}</span>
+                    <span className='min-options'>{'2 Options'}</span>
+                    <span className='min-to-order'>{' (Min.Order)'}</span>
+                </div>
+                <div className='old-prices'>
+                    <span className='min-max-old-prices'>{symbol + ' ' + lowestOldPrice + ' - ' + symbol + ' ' + highestOldPrice}</span>
+                </div>
             </div>
         );
     }
@@ -115,7 +184,6 @@ class ProductPageComponent extends Component {
     renderDiscountBlock(discount) {
         const { amount, end_date } = discount;
 
-        // Calculate miliseconds until timer runs out
         const timeNow = Date.now();
         const endTime = new Date(end_date).getTime();
         const endTimer = endTime - timeNow;
@@ -147,25 +215,45 @@ class ProductPageComponent extends Component {
                 tags,
                 reviews,
                 discount,
-                shipping: { props }
+                options,
+                shipping: { props },
+                shipping: {
+                    method: {
+                        cost: {
+                            currency: {
+                                symbol
+                            }
+                        }
+                    }
+                }
             } = productData;
+
+        const { isMobile, isTablet } = this.state;
 
         return (
             <div className='product-details'>
                 { this.renderTopBanner(props) }
                 { this.renderProductName(name, tags) }
                 <Reviews reviewData={ reviews }/>
-                { this.renderOption() }
+                { this.renderOption( options, symbol ) }
                 { this.renderStoreBanner() }
                 { this.renderDiscountBlock(discount) }
-                <p>options with qty rockers</p>
+                <QtyRockers
+                    options={ options }
+                    minValue={ 0 }
+                    maxValue={ 5 }
+                    stepIncrement= { 1 }
+                    isMobile= { isMobile }
+                    isTablet = { isTablet }
+                    updateAddedOption = { this.updateAddedOption }
+                />
                 { this.renderTradeAssuranceBlock() }
             </div>
         );
     }
 
     render() {
-        const { isLoading } = this.state;
+        const { isLoading, isMobile, isTablet, addedOptions } = this.state;
 
         if (isLoading) {
             return (
@@ -176,19 +264,21 @@ class ProductPageComponent extends Component {
         const { data: {
             product, product: { gallery, shipping }
         }} = this.state;
-        console.log('test', this.state.data);
 
         return (
-            <div className='product-detail-page'>
+            <div className={`product-detail-page ${( !isMobile && !isTablet ) ? "desktop" : ""} ${isTablet ? "tablet" : ""}`}>
                 <div className='product-image'>
                     <Image
                         url={ gallery[0].main }
                     />
                 </div>
-                { this.renderProductDetails(product) }
-                <OrderBlock
-                    shippingData={ shipping }
-                />
+                <div className='product-detail'>
+                    { this.renderProductDetails(product) }
+                    <OrderBlock
+                        shippingData={ shipping }
+                        addedOptions= { addedOptions }
+                    />
+                </div>
             </div>
         );
     }
