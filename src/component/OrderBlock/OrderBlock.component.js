@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { Component } from 'react';
 import Button from '../shared/Button/Button.component';
 import IconEnvelope from '../../assets/icon-envelope.png';
@@ -118,6 +119,28 @@ class OrderBlock extends Component {
         }
     }
 
+    renderAddedOptions(addedOptions) {
+        if (addedOptions) {
+            return (
+                <div className='added-options'>
+                    { addedOptions.map(({optionLabel, optionPrice, count, symbol}) => {
+                        if (count > 0) {
+                            return (
+                                <div className='added-option' key={ optionLabel }>
+                                    <span className='option-label'>{ optionLabel }</span>
+                                    <div>
+                                        <span className='option-count'>{ count }</span>
+                                        <span className='option-price'>{ symbol + ' ' + (optionPrice*count).toFixed(2)}</span>
+                                    </div>
+                                </div>
+                            );
+                        }
+                    })}
+                </div>
+            );
+        }
+    }
+
     render() {
         const { shippingData,
                 addedOptions,
@@ -131,6 +154,7 @@ class OrderBlock extends Component {
 
         return (
             <div className='product-order-block'>
+                { this.renderAddedOptions(addedOptions) }
                 { this.renderShipTo(method, addedOptions) }
                 { this.renderLeadTime(lead_time) }
                 { this.renderShippingTime(method) }

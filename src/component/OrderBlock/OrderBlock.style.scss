@@ -5,6 +5,31 @@
     background-color: #FFFFFF;
     font-size: 14px;
 
+    .added-options {
+        margin: 0 0 24px;
+
+        .option-label {
+            min-width: 50%;
+        }
+
+        .option-count {
+            margin: 0 10px 0 0;
+        }
+
+        .added-option {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .added-option {
+            margin: 0 0 8px;
+
+            &:last-of-type {
+                margin: 0;
+            }
+        }
+    }
+
     .lead-number,
     .shipping-time-number {
         font-weight: bold;

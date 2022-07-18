@@ -11,6 +11,7 @@ import ChevronRight from '../../assets/icon-chevron-right.png';
 import Reviews from '../../component/shared/Reviews/Reviews.component';
 import './ProductPage.style.scss';
 import QtyRockers from '../../component/shared/QtyRockers/QtyRockers.component';
+import Loader from '../../component/shared/Loader/Loader.component';
 
 class ProductPageComponent extends Component {
     constructor(props) {
@@ -173,8 +174,8 @@ class ProductPageComponent extends Component {
                         <Image url={ApplePay} />
                     </span>
                 </div>
-                <div>
-                    <span>{'Alibaba.com Logistics'}</span>
+                <div className='alibaba'>
+                    <span className='logistics'>{'Alibaba.com Logistics'}</span>
                     <span>{'Inspection Solutions'}</span>
                 </div>
             </div>
@@ -257,8 +258,8 @@ class ProductPageComponent extends Component {
 
         if (isLoading) {
             return (
-                <h1>PRODUCT IS LOADING</h1>
-            )
+                <Loader />
+            );
         }
 
         const { data: {

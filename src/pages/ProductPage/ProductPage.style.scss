@@ -173,6 +173,10 @@
             }
         }
 
+        .logistics {
+            margin: 0 24px 0 0;
+        }
+
         .payments {
             margin: 12px 0;
 
@@ -196,6 +200,10 @@
             &-end-timer {
                 font-size: 16px;
             }
+        }
+
+        .discount-end-timer {
+            font-style: italic;
         }
 
         .icon {
