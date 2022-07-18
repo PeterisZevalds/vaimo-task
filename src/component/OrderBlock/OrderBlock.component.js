@@ -129,7 +129,7 @@ class OrderBlock extends Component {
                                 <div className='added-option' key={ optionLabel }>
                                     <span className='option-label'>{ optionLabel }</span>
                                     <div>
-                                        <span className='option-count'>{ count }</span>
+                                        <span className='option-count'>{ 'x' + count }</span>
                                         <span className='option-price'>{ symbol + ' ' + (optionPrice*count).toFixed(2)}</span>
                                     </div>
                                 </div>

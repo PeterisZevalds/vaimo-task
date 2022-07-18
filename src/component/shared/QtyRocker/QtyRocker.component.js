@@ -131,7 +131,7 @@ class QtyRocker extends Component {
 
         return (
             <div className='qty-rocker'>
-                <button className='rocker-button decrement' disabled={ !decrementActive } onClick={() => this.decrementOption()}>{'-'}</button>
+                <button className='rocker-button decrement' disabled={ !decrementActive } onClick={() => this.decrementOption()}><span>{'-'}</span></button>
                 <input
                     className='input'
                     type="number"
@@ -144,7 +144,7 @@ class QtyRocker extends Component {
                     onBlur={ this.handleInputOnBlur }
                     onKeyDown={ this.handleInputKeyDown }
                 ></input>
-                <button className='rocker-button increment' disabled={ !incrementActive } onClick={() => this.incrementOption()}>{'+'}</button>
+                <button className='rocker-button increment' disabled={ !incrementActive } onClick={() => this.incrementOption()}><span>{'+'}</span></button>
             </div>
         );
     }
